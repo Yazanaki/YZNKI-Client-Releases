@@ -1,0 +1,41 @@
+# Publishes the installer in installer/ as a GitHub Release.
+# Push a new installer named Yazanaki-Client-Setup-<version>.exe and this
+# creates (or updates) release v<version> with it attached.
+name: Publish release
+
+on:
+  push:
+    paths: ['installer/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Find installer
+        id: find
+        run: |
+          file=$(ls -1 installer/Yazanaki-Client-Setup-*.exe 2>/dev/null | sort -V | tail -1)
+          if [ -z "$file" ]; then echo "No installer in installer/, nothing to publish"; exit 0; fi
+          version=$(basename "$file" .exe | sed 's/^Yazanaki-Client-Setup-//')
+          echo "file=$file" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "sha=$(sha256sum "$file" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+      - if: steps.find.outputs.version != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.find.outputs.version }}
+          name: Yazanaki Client ${{ steps.find.outputs.version }}
+          files: ${{ steps.find.outputs.file }}
+          make_latest: true
+          body: |
+            Windows installer for the Yazanaki Client.
+
+            1. Download **Yazanaki-Client-Setup-${{ steps.find.outputs.version }}.exe** below.
+            2. Double-click it. If Windows says "Windows protected your PC", click **More info**, then **Run anyway**.
+
+            SHA-256: `${{ steps.find.outputs.sha }}`

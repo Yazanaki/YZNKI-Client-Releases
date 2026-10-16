@@ -1,0 +1,85 @@
+YAZANAKI CLIENT - TERMS OF USE AND PRIVACY NOTICE
+Last updated: 16 October 2026
+
+Please read these terms before installing. By clicking "I Agree", installing,
+or using the Yazanaki Client ("the Client"), you agree to them. If you do not
+agree, click "Cancel" and do not use the Client.
+
+NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG
+OR MICROSOFT. "Minecraft" is a trademark of Mojang AB / Microsoft.
+
+1. WHAT THE CLIENT IS
+The Client is a free, community-made launcher for Minecraft: Java Edition,
+provided by the Yazanaki Empire community ("we", "us"). It downloads and starts
+the official game files. It does not include, sell or modify Minecraft itself.
+
+2. YOU NEED YOUR OWN MINECRAFT LICENCE
+To play online you must own Minecraft: Java Edition and sign in with your own
+Microsoft account. Your use of Minecraft is governed by the Minecraft End User
+License Agreement and the Microsoft Services Agreement, which you must follow.
+Offline mode is provided for testing and single-player use only.
+
+3. LICENCE TO USE
+We grant you a personal, free, non-exclusive, revocable licence to install and
+use the Client. The Client, its code, artwork, emblem and name belong to the
+Yazanaki Empire. All rights reserved. You may not sell the Client, redistribute
+modified copies, or remove these terms. You may share the official download
+link.
+
+4. RULES
+You agree not to use the Client to:
+ - cheat, or gain an unfair advantage on any server;
+ - bypass anti-cheat, server rules, bans or security measures;
+ - harm, harass or impersonate other players;
+ - attack, overload or abuse our servers or anyone else's;
+ - break any law or any server's rules.
+We may suspend or revoke your EmpireID access if you break these rules.
+
+5. MODS AND THIRD-PARTY CONTENT
+Mods, Fabric, Java and game files are made by third parties and are downloaded
+from their own sources. They have their own licences. We are not responsible
+for third-party content, including mods you add yourself.
+
+6. YOUR DATA (PRIVACY NOTICE)
+Stored on your PC only:
+ - your Microsoft/Minecraft sign-in, profiles, mods and settings;
+ - your EmpireID sign-in token, encrypted with Windows' secure storage.
+Sent to Yazanaki Empire servers, only if you sign in with an EmpireID:
+ - your EmpireID and the 6-digit code you enter;
+ - your IP address (to limit abuse) and a device sign-in record.
+ We use this only to sign you in and check your Empire membership. We do
+ not sell it. Sign-in codes expire after 5 minutes. You can sign out at any
+ time in the Empire tab, and you can ask an Empire officer to delete your
+ device records.
+Sent to third parties, as needed to run the game:
+ - Microsoft and Mojang (sign-in, game files, your skin);
+ - Eclipse Adoptium (Java downloads);
+ - Fabric (mod loader files).
+The Client contains no ads and no analytics or tracking.
+
+7. NO WARRANTY
+THE CLIENT IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING FITNESS FOR A PARTICULAR PURPOSE AND
+NON-INFRINGEMENT. WE DO NOT PROMISE THAT IT WILL BE ERROR-FREE, SECURE OR
+ALWAYS AVAILABLE. BACK UP YOUR WORLDS AND FILES.
+
+8. LIMITATION OF LIABILITY
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE ARE NOT LIABLE FOR ANY INDIRECT,
+INCIDENTAL OR CONSEQUENTIAL DAMAGES, OR FOR LOSS OF DATA, ACCOUNTS, WORLDS OR
+PROFITS, ARISING FROM YOUR USE OF THE CLIENT. THE CLIENT IS FREE, AND OUR TOTAL
+LIABILITY IS LIMITED TO ZERO EUROS / DOLLARS. NOTHING HERE LIMITS LIABILITY
+THAT CANNOT BE LIMITED BY LAW, OR YOUR STATUTORY RIGHTS AS A CONSUMER.
+
+9. CHANGES AND TERMINATION
+We may update the Client and these terms. The current terms are published with
+each release. If you keep using the Client after an update, the new terms
+apply. You may stop using the Client at any time by uninstalling it. We may
+stop providing the Client or EmpireID services at any time.
+
+10. AGE
+If you are under the age of digital consent where you live, a parent or
+guardian must agree to these terms for you.
+
+11. CONTACT
+Questions or data requests: contact a Yazanaki Empire officer on the Empire
+Discord server.
