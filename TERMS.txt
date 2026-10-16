@@ -54,7 +54,10 @@ Sent to Yazanaki Empire servers, only if you sign in with an EmpireID:
 Sent to third parties, as needed to run the game:
  - Microsoft and Mojang (sign-in, game files, your skin);
  - Eclipse Adoptium (Java downloads);
- - Fabric (mod loader files).
+ - Fabric and Forge (mod loader files);
+ - Modrinth (mod search and mod downloads, only when you use them);
+ - Discord, if Rich Presence is on: the Discord app on your PC shows your
+   profile name and Minecraft version on your Discord status.
 The Client contains no ads and no analytics or tracking.
 
 7. NO WARRANTY
