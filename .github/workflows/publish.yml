@@ -1,6 +1,8 @@
 # Publishes the installer in installer/ as a GitHub Release.
-# Push a new installer named Yazanaki-Client-Setup-<version>.exe and this
-# creates (or updates) release v<version> with it attached.
+# Push a new installer named Yazanaki-Client-Setup-<version>.exe together with
+# its .blockmap and latest.yml (all three from the client's dist/ folder) and
+# this creates release v<version> with them attached. The installed app checks
+# that release for auto-updates.
 name: Publish release
 
 on:
@@ -30,7 +32,12 @@ jobs:
         with:
           tag_name: v${{ steps.find.outputs.version }}
           name: Yazanaki Client ${{ steps.find.outputs.version }}
-          files: ${{ steps.find.outputs.file }}
+          # The .blockmap and latest.yml are what the app's auto-updater reads.
+          files: |
+            ${{ steps.find.outputs.file }}
+            ${{ steps.find.outputs.file }}.blockmap
+            installer/latest.yml
+          fail_on_unmatched_files: true
           make_latest: true
           body: |
             Windows installer for the Yazanaki Client.
