@@ -19,12 +19,14 @@ jobs:
       - name: Find installer
         id: find
         run: |
-          file=$(ls -1 installer/Yazanaki-Client-Setup-*.exe | sort -V | tail -1)
+          file=$(ls -1 installer/Yazanaki-Client-Setup-*.exe 2>/dev/null | sort -V | tail -1)
+          if [ -z "$file" ]; then echo "No installer in installer/, nothing to publish"; exit 0; fi
           version=$(basename "$file" .exe | sed 's/^Yazanaki-Client-Setup-//')
           echo "file=$file" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "sha=$(sha256sum "$file" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
-      - uses: softprops/action-gh-release@v2
+      - if: steps.find.outputs.version != ''
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.find.outputs.version }}
           name: Yazanaki Client ${{ steps.find.outputs.version }}
