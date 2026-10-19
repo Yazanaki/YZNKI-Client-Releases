@@ -1,8 +1,8 @@
-version: 0.1.52
+version: 0.1.53
 files:
-  - url: Yazanaki-Client-Setup-0.1.52.exe
-    sha512: U8ncVp2tGy64aPs8Xw44wMUhYzEecUzL+1QFebutrNnebJXaHNFUbKRVDZ482zwEzC78ev3BffwHI6xfcO14Fg==
-    size: 91021862
-path: Yazanaki-Client-Setup-0.1.52.exe
-sha512: U8ncVp2tGy64aPs8Xw44wMUhYzEecUzL+1QFebutrNnebJXaHNFUbKRVDZ482zwEzC78ev3BffwHI6xfcO14Fg==
-releaseDate: '2026-10-19T13:19:29.992Z'
+  - url: Yazanaki-Client-Setup-0.1.53.exe
+    sha512: J2HJ6/Y1Ud/jNgJMeLetSmtyHWZ6gKpl/Z49i8DxYKYW+WH8L3DXBqRmS+jXvaN3/a6bZ6lIHJOg1Ior82xEcw==
+    size: 91228990
+path: Yazanaki-Client-Setup-0.1.53.exe
+sha512: J2HJ6/Y1Ud/jNgJMeLetSmtyHWZ6gKpl/Z49i8DxYKYW+WH8L3DXBqRmS+jXvaN3/a6bZ6lIHJOg1Ior82xEcw==
+releaseDate: '2026-10-19T15:06:56.256Z'
