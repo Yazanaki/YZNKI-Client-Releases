@@ -3,10 +3,15 @@
 # its .blockmap and latest.yml (all three from the client's dist/ folder) and
 # this creates release v<version> with them attached. The installed app checks
 # that release for auto-updates.
+#
+# Only main publishes. Every installed client picks up the newest release, so a
+# push to a feature or PR branch must never create one: put the new installer
+# on a branch, open a PR, and the release goes out when the PR is merged.
 name: Publish release
 
 on:
   push:
+    branches: [main]
     paths: ['installer/**']
   workflow_dispatch:
 
@@ -15,6 +20,8 @@ permissions:
 
 jobs:
   publish:
+    # A manual run from another branch would publish that branch's installer.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
