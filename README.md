@@ -18,3 +18,8 @@ when a new version is out, a **Restart to update** button appears at the top.
 
 Replace the files in `installer/` with the new `Yazanaki-Client-Setup-<version>.exe`,
 its `.blockmap` and `latest.yml` from the client's `dist/` folder, and push. The *Publish release* workflow creates release `v<version>` with it.
+
+Only `main` publishes. Pushing the installer to any other branch does nothing, so
+installed clients never update to a build that hasn't been merged. Put the new
+installer on a branch, open a pull request, and the release goes out when it is
+merged into `main`.
