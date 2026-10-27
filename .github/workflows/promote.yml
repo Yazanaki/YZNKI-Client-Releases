@@ -1,0 +1,94 @@
+# Moves a staged version to a release track.
+# Run it from the Actions tab (Promote > Run workflow) with:
+#   version - e.g. 0.3.5, or empty for the newest release
+#   track   - installer: mark that release Latest, so the download link,
+#                        the README and the Discord button give it out
+#             updater:   point updater/latest.yml (what installed clients
+#                        read) at it, so installed clients update to it
+#             both:      both of the above
+# Stage release calls it for the AUTO_PROMOTE track of every new version.
+# Installed clients never downgrade: promoting an older version to updater
+# only stops newer ones from going out.
+name: Promote
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to promote (e.g. 0.3.5). Empty = the newest release.
+        required: false
+        default: ''
+      track:
+        description: Which track gets it
+        type: choice
+        options: [installer, updater, both]
+        default: installer
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        required: true
+      track:
+        type: string
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  # Not the caller's group (release-tracks): a called workflow sharing it would wait on itself.
+  group: promote
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    # A manual run from another branch would use that branch's copy of this file.
+    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VERSION: ${{ inputs.version }}
+      TRACK: ${{ inputs.track }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Find the release
+        id: rel
+        run: |
+          v="${VERSION#v}"
+          if [ -z "$v" ]; then
+            v=$(gh release list --exclude-drafts --limit 100 --json tagName,createdAt \
+              --jq '[.[] | select(.tagName | test("^v[0-9]+\\.[0-9]+\\.[0-9]+$"))] | sort_by(.createdAt) | last | .tagName')
+            v="${v#v}"
+          fi
+          gh release view "v$v" >/dev/null || { echo "::error::There is no release v$v"; exit 1; }
+          case "$TRACK" in installer|updater|both) ;; *) echo "::error::Unknown track $TRACK"; exit 1;; esac
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+      - name: In-client updates (updater/latest.yml)
+        if: inputs.track == 'updater' || inputs.track == 'both'
+        env:
+          V: ${{ steps.rel.outputs.version }}
+        run: |
+          tmp=$(mktemp -d)
+          gh release download "v$V" -p latest.yml -D "$tmp"
+          grep -qx "version: $V" "$tmp/latest.yml" || { echo "::error::latest.yml of v$V is not for $V"; exit 1; }
+          # The feed lives on main, the files in the release: make the file
+          # names in latest.yml full links to the release's assets.
+          base="https://github.com/$GITHUB_REPOSITORY/releases/download/v$V/"
+          mkdir -p updater
+          sed -E "s#^([ -]*url|path): (Yazanaki-Client-Setup-[^ ]+)\$#\1: $base\2#" "$tmp/latest.yml" > updater/latest.yml
+          grep -q "$base" updater/latest.yml || { echo "::error::No installer file in latest.yml"; exit 1; }
+          git add updater/latest.yml
+          if git diff --cached --quiet; then echo "updater already on $V"; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "In-client updates: $V"
+          git push origin HEAD:main
+          echo "In-client updates now get **$V**." >> "$GITHUB_STEP_SUMMARY"
+      - name: Installer download (Latest release)
+        if: inputs.track == 'installer' || inputs.track == 'both'
+        env:
+          V: ${{ steps.rel.outputs.version }}
+        run: |
+          gh release edit "v$V" --latest
+          echo "The installer download now gives out **$V**." >> "$GITHUB_STEP_SUMMARY"

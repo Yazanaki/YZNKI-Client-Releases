@@ -16,10 +16,27 @@ when a new version is out, a **Restart to update** button appears at the top.
 
 ## Publishing a new version
 
-Replace the files in `installer/` with the new `Yazanaki-Client-Setup-<version>.exe`,
-its `.blockmap` and `latest.yml` from the client's `dist/` folder, and push. The *Publish release* workflow creates release `v<version>` with it.
+There are two release tracks, moved separately:
 
-Only `main` publishes. Pushing the installer to any other branch does nothing, so
-installed clients never update to a build that hasn't been merged. Put the new
-installer on a branch, open a pull request, and the release goes out when it is
-merged into `main`.
+- **In-client updates** (the **Restart to update** button): installed clients
+  read [`updater/latest.yml`](updater/latest.yml) on `main`.
+- **The installer download**: the release marked *Latest*, which the download
+  link above points at.
+
+The client's `npm run release` (run automatically for each new version on its
+`main` by `npm run release:watch`) pushes a branch `release-<version>` with
+`Yazanaki-Client-Setup-<version>.exe`, its `.blockmap` and `latest.yml` in
+`installer/`. The *Stage release* workflow then creates release `v<version>`
+with them (not marked Latest), deletes the branch and promotes the version to
+the track in the `AUTO_PROMOTE` repository variable (Settings > Secrets and
+variables > Actions > Variables): `updater` when it is not set, or
+`installer`, `both`, `none`.
+
+To move a track by hand: Actions > **Promote** > Run workflow, enter the
+version (empty for the newest release) and pick the track. Promoting the
+installer marks that release Latest. Installed clients never downgrade, so
+promoting an older version to `updater` only holds newer ones back.
+
+Clients older than 0.3.5 don't read `updater/latest.yml` yet and follow the
+Latest release, so promote 0.3.5 to `installer` (or `both`) once to bring them
+onto the new updater.

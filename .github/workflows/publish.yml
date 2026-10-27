@@ -1,55 +1,83 @@
-# Publishes the installer in installer/ as a GitHub Release.
-# Push a new installer named Yazanaki-Client-Setup-<version>.exe together with
-# its .blockmap and latest.yml (all three from the client's dist/ folder) and
-# this creates release v<version> with them attached. The installed app checks
-# that release for auto-updates.
+# Stages a new version of the Yazanaki Client.
+# The client's `npm run release` (or `npm run release:watch`) pushes a branch
+# release-<version> with Yazanaki-Client-Setup-<version>.exe, its .blockmap
+# and latest.yml in installer/. This creates release v<version> with them
+# attached, NOT marked Latest, so the installer download doesn't move. Then it
+# promotes the version to the track(s) in the AUTO_PROMOTE repository variable
+# (default "updater": installed clients update right away; "installer",
+# "both" or "none" also work) and deletes the branch.
 #
-# Only main publishes. Every installed client picks up the newest release, so a
-# push to a feature or PR branch must never create one: put the new installer
-# on a branch, open a PR, and the release goes out when the PR is merged.
-name: Publish release
+# Two tracks, moved separately by the Promote workflow:
+#   updater   - updater/latest.yml on main, which installed clients read.
+#   installer - the release marked Latest, behind the download link.
+name: Stage release
 
 on:
   push:
-    branches: [main]
+    branches: ['release-*']
     paths: ['installer/**']
-  workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: release-tracks
+  cancel-in-progress: false
+
 jobs:
-  publish:
-    # A manual run from another branch would publish that branch's installer.
-    if: github.ref == 'refs/heads/main'
+  stage:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.find.outputs.version }}
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
-      - name: Find installer
+      - name: Check the installer matches the branch
         id: find
         run: |
-          file=$(ls -1 installer/Yazanaki-Client-Setup-*.exe 2>/dev/null | sort -V | tail -1)
-          if [ -z "$file" ]; then echo "No installer in installer/, nothing to publish"; exit 0; fi
-          version=$(basename "$file" .exe | sed 's/^Yazanaki-Client-Setup-//')
-          echo "file=$file" >> "$GITHUB_OUTPUT"
+          version="${GITHUB_REF_NAME#release-}"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Branch $GITHUB_REF_NAME is not release-X.Y.Z"; exit 1
+          fi
+          exe="installer/Yazanaki-Client-Setup-$version.exe"
+          for f in "$exe" "$exe.blockmap" installer/latest.yml; do
+            [ -f "$f" ] || { echo "::error::$f is missing"; exit 1; }
+          done
+          grep -qx "version: $version" installer/latest.yml || { echo "::error::installer/latest.yml is not for $version"; exit 1; }
           echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "sha=$(sha256sum "$file" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
-      - if: steps.find.outputs.version != ''
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: v${{ steps.find.outputs.version }}
-          name: Yazanaki Client ${{ steps.find.outputs.version }}
-          # The .blockmap and latest.yml are what the app's auto-updater reads.
-          files: |
-            ${{ steps.find.outputs.file }}
-            ${{ steps.find.outputs.file }}.blockmap
-            installer/latest.yml
-          fail_on_unmatched_files: true
-          make_latest: true
-          body: |
-            Windows installer for the Yazanaki Client.
+          echo "exe=$exe" >> "$GITHUB_OUTPUT"
+          echo "sha=$(sha256sum "$exe" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+      - name: Create release (not Latest)
+        env:
+          VERSION: ${{ steps.find.outputs.version }}
+          EXE: ${{ steps.find.outputs.exe }}
+          SHA: ${{ steps.find.outputs.sha }}
+        run: |
+          files=("$EXE" "$EXE.blockmap" installer/latest.yml)
+          if gh release view "v$VERSION" >/dev/null 2>&1; then
+            # A re-push of the same version replaces its files.
+            gh release upload "v$VERSION" "${files[@]}" --clobber
+          else
+            cat > notes.md <<NOTES
+          Windows installer for the Yazanaki Client.
 
-            1. Download **Yazanaki-Client-Setup-${{ steps.find.outputs.version }}.exe** below.
-            2. Double-click it. If Windows says "Windows protected your PC", click **More info**, then **Run anyway**.
+          1. Download **Yazanaki-Client-Setup-$VERSION.exe** below.
+          2. Double-click it. If Windows says "Windows protected your PC", click **More info**, then **Run anyway**.
 
-            SHA-256: `${{ steps.find.outputs.sha }}`
+          SHA-256: \`$SHA\`
+          NOTES
+            # The tag points at main so the installer commit can go with the branch.
+            gh release create "v$VERSION" "${files[@]}" --target main --latest=false \
+              --title "Yazanaki Client $VERSION" --notes-file notes.md
+          fi
+      - name: Delete the release branch
+        run: git push origin --delete "$GITHUB_REF_NAME" || true
+
+  promote:
+    needs: stage
+    if: (vars.AUTO_PROMOTE || 'updater') != 'none'
+    uses: ./.github/workflows/promote.yml
+    with:
+      version: ${{ needs.stage.outputs.version }}
+      track: ${{ vars.AUTO_PROMOTE || 'updater' }}
