@@ -1,8 +1,9 @@
-version: 0.4.2
+version: 0.6.0
 files:
-  - url: https://github.com/Yazanaki/YZNKI-Client-Releases/releases/download/v0.4.2/Yazanaki-Client-Setup-0.4.2.exe
-    sha512: R3Tjvz2ZWTsXS5+GjpBkNqyHlV6K95fFzbr4r877TCBMRL759mR0Zy7HchkS0VgrnXpVc4005ZPTvuGCi9BniQ==
-    size: 94529303
-path: https://github.com/Yazanaki/YZNKI-Client-Releases/releases/download/v0.4.2/Yazanaki-Client-Setup-0.4.2.exe
-sha512: R3Tjvz2ZWTsXS5+GjpBkNqyHlV6K95fFzbr4r877TCBMRL759mR0Zy7HchkS0VgrnXpVc4005ZPTvuGCi9BniQ==
-releaseDate: '2026-10-27T14:45:54.757Z'
+  - url: https://github.com/Yazanaki/YZNKI-Client-Releases/releases/download/v0.6.0/Yazanaki-Client-Setup-0.6.0.exe
+    sha512: IlG9qAhQBvUe9PQhuk4WNlBb01n0vPAUTTFXI+cKnzkm0N3FXSu/OKlHvtnsMsrNIgJyld5kbCkcvyUmamlJzw==
+    size: 94542395
+path: https://github.com/Yazanaki/YZNKI-Client-Releases/releases/download/v0.6.0/Yazanaki-Client-Setup-0.6.0.exe
+sha512: IlG9qAhQBvUe9PQhuk4WNlBb01n0vPAUTTFXI+cKnzkm0N3FXSu/OKlHvtnsMsrNIgJyld5kbCkcvyUmamlJzw==
+releaseDate: '2026-10-27T21:38:27.690Z'
+yazanakiSignature: EgkoHnBlV0aCAhiorC+khLVu40vG8kxuzGg70A9fXMAQVI1Jik+zdwCnwUCn6Mh7og9mk7RFTTIiAmP+OMWXCw==
