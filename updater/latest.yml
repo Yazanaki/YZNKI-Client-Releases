@@ -1,9 +1,9 @@
-version: 0.11.1
+version: 0.11.2
 files:
-  - url: https://github.com/Yazanaki/YZNKI-Client-Releases/releases/download/v0.11.1/Yazanaki-Client-Setup-0.11.1.exe
-    sha512: ODVuhPueswr6PsZKVmaR0GxayUEGOlmaOr7gcYyfAfWEiXKpeqNwIm+L49DDRrKGQAOUP4EvyeLiGqqgAnfpbA==
-    size: 100740157
-path: https://github.com/Yazanaki/YZNKI-Client-Releases/releases/download/v0.11.1/Yazanaki-Client-Setup-0.11.1.exe
-sha512: ODVuhPueswr6PsZKVmaR0GxayUEGOlmaOr7gcYyfAfWEiXKpeqNwIm+L49DDRrKGQAOUP4EvyeLiGqqgAnfpbA==
-releaseDate: '2026-11-01T22:45:22.062Z'
-yazanakiSignature: 1W0nnenDH1Gv2Qu2S+lVPhIp/fvF11f9UPifCwdmcmBE8oHYcN1MjtUbMmybRRAlNYLVY4nwgMbeRuO5LTccAg==
+  - url: https://github.com/Yazanaki/YZNKI-Client-Releases/releases/download/v0.11.2/Yazanaki-Client-Setup-0.11.2.exe
+    sha512: bFv++7w0I5djuwBzgVMvVPvmIaBJ6qg3VYxT/pxGKNgu3QpYfrV3XClUPi3oEotrR7qVH26Zn1P4EuRWde+UHg==
+    size: 100762741
+path: https://github.com/Yazanaki/YZNKI-Client-Releases/releases/download/v0.11.2/Yazanaki-Client-Setup-0.11.2.exe
+sha512: bFv++7w0I5djuwBzgVMvVPvmIaBJ6qg3VYxT/pxGKNgu3QpYfrV3XClUPi3oEotrR7qVH26Zn1P4EuRWde+UHg==
+releaseDate: '2026-11-02T00:38:13.849Z'
+yazanakiSignature: xydRfaF9KpVzMXzSFIHBEFE0K1OHZjAgazMCR/M7p52vZr8p6Jx34JrtXA5mPbsIL7Ah3st+P8ArGJzav6qsCQ==
