@@ -1,9 +1,9 @@
-version: 0.13.8
+version: 0.13.10
 files:
-  - url: https://github.com/Yazanaki/Yazanaki-Client/releases/download/v0.13.8/Yazanaki-Client-Setup-0.13.8.exe
-    sha512: HMjasQcZxnx7Bh1mRb2I7mmAPxiE83/hFE7TIZKJAfD9Akmn2tld9ncSTUEaPe5I18aqR7h6jPw87EtOJBE5wQ==
-    size: 100914427
-path: https://github.com/Yazanaki/Yazanaki-Client/releases/download/v0.13.8/Yazanaki-Client-Setup-0.13.8.exe
-sha512: HMjasQcZxnx7Bh1mRb2I7mmAPxiE83/hFE7TIZKJAfD9Akmn2tld9ncSTUEaPe5I18aqR7h6jPw87EtOJBE5wQ==
-releaseDate: '2026-11-07T02:29:54.506Z'
-yazanakiSignature: k7CfX1z6ZSKm+fLk8GFw5IZatC8IKsqfb48mxgvfoeM63XmmDF2HKX5IERP7pKD/Lk1iiQUJq87D9Cxwnzl5Bw==
+  - url: https://github.com/Yazanaki/Yazanaki-Client/releases/download/v0.13.10/Yazanaki-Client-Setup-0.13.10.exe
+    sha512: BuQvFX6ekhx+zDEP4FqQvNZ9QGJIO1KKh8t9iRmZukWAuECz4Si+QZvETUGr9tOJUoq64RXGbV2g/SbBzEPzJg==
+    size: 100928631
+path: https://github.com/Yazanaki/Yazanaki-Client/releases/download/v0.13.10/Yazanaki-Client-Setup-0.13.10.exe
+sha512: BuQvFX6ekhx+zDEP4FqQvNZ9QGJIO1KKh8t9iRmZukWAuECz4Si+QZvETUGr9tOJUoq64RXGbV2g/SbBzEPzJg==
+releaseDate: '2026-11-07T15:44:45.551Z'
+yazanakiSignature: 94PXlm00I/qZniM8SNFCcdYyKqlpG/rXoYgdGsqAiO52Ymin5yILsc5vmOimaYjk/8I+NGMsyIZ+SsQHRkkvAQ==
